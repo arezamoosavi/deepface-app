@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  web: &basePy
+    build:
+      context: .
+      dockerfile: ./containers/python/Dockerfile
+    volumes:
+      - ./main:/main
+    env_file:
+      - ./.envs/.web
+    links:
+      - mongodb
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    command: sh /run_web.sh
+
+  jupyter:
+    <<: *basePy
+    ports:
+      - "8888:8888"
+    command: sh /run_jupyter.sh
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:4.0.4
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+    ports:
+      - "27017:27017"
+    expose:
+      - "27017"
+    volumes:
+      - mgdata:/var/lib/mongodb/data/
+    restart: unless-stopped
+
+volumes:
+  mgdata:
