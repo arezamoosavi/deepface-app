@@ -132,6 +132,5 @@ dmypy.json
 
 #Android Application
 .gradle
-.png
 .jar
 .idea/
