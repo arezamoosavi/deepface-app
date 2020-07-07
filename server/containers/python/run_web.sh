@@ -4,7 +4,10 @@
 set -o errexit
 set -o nounset
 
-while python check_database.py; do echo 'connecting to database...'; sleep 2; done;
+while python3 check_database.py; do echo 'connecting to database...'; sleep 2; done;
+
+
+# python3 preload.py
 
 
 echo ". . . . . Web Boot Up Is Done! . . . . ."

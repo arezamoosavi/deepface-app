@@ -12,3 +12,6 @@ start:
 
 cleanup:
 	docker-compose down -v
+
+dl-files:
+	docker-compose exec web python3 preload.py
