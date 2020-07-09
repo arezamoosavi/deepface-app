@@ -16,10 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-//        val btn_upload_photo = findViewById<Button>(R.id.button_first)
-//        btn_upload_photo.setOnClickListener{
-//            Toast.makeText(this, "Please upload your image.", Toast.LENGTH_LONG).show()
-//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
