@@ -11,8 +11,6 @@ services:
       - ./.envs/.web
     links:
       - mongodb
-    ports:
-      - "5000:5000"
     restart: unless-stopped
     command: sh /run_web.sh
 
@@ -36,5 +34,18 @@ services:
       - mgdata:/var/lib/mongodb/data/
     restart: unless-stopped
 
+  traefik:
+    build:
+      context: .
+      dockerfile: ./containers/traefik/Dockerfile
+    depends_on:
+      - web
+    volumes:
+      - production_traefik:/etc/traefik/acme
+    ports:
+      - "8000:8000"
+      - "443:443"
+
 volumes:
-  mgdata:
+  mgdata: {}
+  production_traefik: {}

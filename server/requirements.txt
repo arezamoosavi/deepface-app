@@ -4,6 +4,7 @@ starlette
 uvicorn
 fastapi
 pydantic
+python-multipart
 
 # Mongo
 # ------------------------------------------------------------------------------

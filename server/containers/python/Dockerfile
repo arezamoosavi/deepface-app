@@ -1,26 +1,33 @@
-FROM python:3.7.6-slim
+FROM ubuntu:latest
+
+# Install OpenJDK 8
+RUN \
+    apt-get update && \
+    apt-get install -y openjdk-8-jdk && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python
+RUN \
+    apt-get update && \
+    apt-get install -y python3 python3-dev python3-pip python3-virtualenv && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
 ENV PIP_FORMAT=legacy
 
-RUN apt-get -y update && apt-get install -y python-pip python-dev libzbar-dev bash \
-    gcc python3-dev git libc-dev
-
-RUN echo 'deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends apt-utils
+RUN apt-get -y update && apt-get install -y libzbar-dev bash gcc git libc-dev
 
 RUN apt-get install -y netcat && apt-get autoremove -y
 
 RUN adduser --disabled-password --gecos '' myuser
 
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir jupyterlab
+RUN apt-get install -y build-essential
+RUN pip3 install jupyterlab
+RUN pip3 install deepface
 
 COPY requirements.txt /requirements.txt
-RUN pip install --no-cache-dir -r /requirements.txt
+RUN pip3 install --no-cache-dir -r /requirements.txt
 
 RUN mkdir -p /main
 
