@@ -50,8 +50,8 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        imageview = view.findViewById<ImageView>(R.id.imageView2)
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            view.findViewById<ImageView>(R.id.imageView2).setImageResource(R.drawable.filband)
 
             Toast.makeText(super.getContext(), "Please upload your image.", Toast.LENGTH_LONG)
                 .show()
@@ -64,7 +64,8 @@ class FirstFragment : Fragment() {
         val pictureDialog = AlertDialog.Builder(context)
         pictureDialog.setTitle("Select Action")
         val pictureDialogItems = arrayOf("Select image from gallery", "Capture photo from camera")
-        pictureDialog.setItems(pictureDialogItems
+        pictureDialog.setItems(
+            pictureDialogItems
         ) { dialog, which ->
             when (which) {
                 0 -> chooseImageFromGallery()
@@ -75,7 +76,7 @@ class FirstFragment : Fragment() {
     }
 
     fun chooseImageFromGallery() {
-        val galleryIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(galleryIntent, GALLERY)
     }
 
@@ -87,65 +88,60 @@ class FirstFragment : Fragment() {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == GALLERY)
-        {
-            if (data != null)
-            {
+        if (requestCode == GALLERY) {
+            if (data != null) {
                 val contentURI = data!!.data
                 try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, contentURI)
-                    saveImage(bitmap)
+                    val bitmap =
+                        MediaStore.Images.Media.getBitmap(context?.contentResolver, contentURI)
+//                    saveImage(bitmap)
                     Toast.makeText(context, "Image Show!", Toast.LENGTH_SHORT).show()
                     imageview!!.setImageBitmap(bitmap)
-                }
-                catch (e: IOException)
-                {
+                } catch (e: IOException) {
                     e.printStackTrace()
                     Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-        else if (requestCode == CAMERA)
-        {
+        } else if (requestCode == CAMERA) {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             imageview!!.setImageBitmap(thumbnail)
-            saveImage(thumbnail)
+//            saveImage(thumbnail)
             Toast.makeText(context, "Photo Show!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun saveImage(myBitmap: Bitmap):String {
-        val bytes = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
-        val wallpaperDirectory = File (
-            (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
-        Log.d("fee", wallpaperDirectory.toString())
-        if (!wallpaperDirectory.exists())
-        {
-            wallpaperDirectory.mkdirs()
-        }
-        try
-        {
-            Log.d("heel", wallpaperDirectory.toString())
-            val f = File(wallpaperDirectory, ((Calendar.getInstance()
-                .getTimeInMillis()).toString() + ".png"))
-            f.createNewFile()
-            val fo = FileOutputStream(f)
-            fo.write(bytes.toByteArray())
-            MediaScannerConnection.scanFile(context, arrayOf(f.getPath()), arrayOf("image/png"), null)
-            fo.close()
-            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
-
-            return f.getAbsolutePath()
-        }
-        catch (e1: IOException){
-            e1.printStackTrace()
-        }
-        return ""
-    }
-
-    companion object {
-        private val IMAGE_DIRECTORY = "/home/m-seifikar/photo/"
-    }
+//    fun saveImage(myBitmap: Bitmap):String {
+//        val bytes = ByteArrayOutputStream()
+//        myBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
+//        val wallpaperDirectory = File (
+//            (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
+//        Log.d("fee", wallpaperDirectory.toString())
+//        if (!wallpaperDirectory.exists())
+//        {
+//            wallpaperDirectory.mkdirs()
+//        }
+//        try
+//        {
+//            Log.d("heel", wallpaperDirectory.toString())
+//            val f = File(wallpaperDirectory, ((Calendar.getInstance()
+//                .getTimeInMillis()).toString() + ".png"))
+//            f.createNewFile()
+//            val fo = FileOutputStream(f)
+//            fo.write(bytes.toByteArray())
+//            MediaScannerConnection.scanFile(context, arrayOf(f.getPath()), arrayOf("image/png"), null)
+//            fo.close()
+//            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
+//
+//            return f.getAbsolutePath()
+//        }
+//        catch (e1: IOException){
+//            e1.printStackTrace()
+//        }
+//        return ""
+//    }
+//
+//    companion object {
+//        private val IMAGE_DIRECTORY = "/home/m-seifikar/photo/"
+//    }
 
 }
