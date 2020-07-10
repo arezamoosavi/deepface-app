@@ -19,15 +19,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
-import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_first.*
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
