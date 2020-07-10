@@ -134,3 +134,7 @@ dmypy.json
 .gradle
 .jar
 .idea/
+
+# jupyters
+server/main/test_image_process.ipynb
+server/main/test_mongo.ipynb
