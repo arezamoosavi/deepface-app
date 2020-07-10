@@ -36,7 +36,7 @@ async def analyzer(file: bytes = File(...)):
 
     with graph.as_default():
 
-        demography = DeepFace.analyze(img, actions=["emotion"])
+        demography = DeepFace.analyze(img, actions=["age", "race"])
     return {"file_size": len(file), "prediction": demography}
 
 
