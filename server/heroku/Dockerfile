@@ -36,6 +36,6 @@ COPY ./main /main
 WORKDIR /main
 
 COPY ./run_web.sh /run_web.sh
-RUN chmod +x /run_web.sh
+RUN chmod 777 /run_web.sh
 
 ENTRYPOINT ["/run_web.sh"]
