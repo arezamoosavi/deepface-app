@@ -35,7 +35,5 @@ COPY ./main /main
 
 WORKDIR /main
 
-COPY ./run_web.sh /run_web.sh
-RUN chmod 777 /run_web.sh
-
-ENTRYPOINT ["/run_web.sh"]
+CMD uvicorn run_app:app --host "0.0.0.0" --port 80 --reload
+EXPOSE 80
