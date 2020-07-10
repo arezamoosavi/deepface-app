@@ -1,0 +1,15 @@
+# Fastapi
+# ------------------------------------------------------------------------------
+starlette
+uvicorn
+fastapi
+pydantic
+python-multipart
+
+# Mongo
+# ------------------------------------------------------------------------------
+pymongo==3.10.1
+python-dateutil==2.8.1
+Pillow==7.1.2
+blinker==1.4
+mongoengine==0.20.0
