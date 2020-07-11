@@ -36,8 +36,11 @@ COPY ./main /main
 WORKDIR /main
 
 COPY ./containers/python/run_web.sh /run_web.sh
-RUN chmod +x /run_web.sh
+RUN chmod 777 /run_web.sh
 
 # Jupyter
 COPY ./containers/python/run_jupyter.sh /run_jupyter.sh
-RUN chmod +x /run_jupyter.sh
+RUN chmod 777 /run_jupyter.sh
+
+RUN chmod -R 777 /main
+RUN chmod -R 777 ./
