@@ -7,7 +7,13 @@ mongo = Mongo()
 mongo.connect()
 
 
-class Face(Document):
+class analyze(Document):
+
+    time = fields.DateTimeField(default=datetime.utcnow)
+    photo = fields.FileField()
+
+
+class compare(Document):
 
     time = fields.DateTimeField(default=datetime.utcnow)
     first = fields.FileField()
