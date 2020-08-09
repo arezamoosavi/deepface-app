@@ -3,6 +3,7 @@ package com.example.deepfaceapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var toolbar: Toolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView: NavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,23 +38,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_profile -> {
-                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_messages -> {
-                Toast.makeText(this, "Messages clicked", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_friends -> {
-                Toast.makeText(this, "Friends clicked", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_update -> {
-                Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_logout -> {
-                Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
+            R.id.nav_history -> {
+                Toast.makeText(this, "History clicked", Toast.LENGTH_SHORT).show()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 }
+
+
+//curl -X POST "https://deepface-app.herokuapp.com/analyze/" -H "accept: application/json" -H "Content-Type: multipart/form-data" -F "file=@profile-photo.jpeg;type=image/jpeg"
+
+
+//{
+//    "file_size": 73437,
+//    "prediction": {
+//    "emotion": {
+//    "angry": 0.014951343146365207,
+//    "disgust": 0.0026594704208199736,
+//    "fear": 54.735111625777286,
+//    "happy": 5.547018432972618,
+//    "sad": 6.066571570447496,
+//    "surprise": 0.04090486130600586,
+//    "neutral": 33.59277741995127
+//},
+//    "dominant_emotion": "fear"
+//}
+//}

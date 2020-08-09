@@ -4,25 +4,21 @@
     <!--            android:icon="@drawable/ic_profile"-->
     <group>
         <item
-            android:id="@+id/nav_profile"
-            android:title="Profile"/>
-        <item
-            android:id="@+id/nav_messages"
-            android:title="Messages"/>
-        <item
-            android:id="@+id/nav_friends"
-            android:title="Friends"/>
+            android:id="@+id/nav_history"
+            android:title="History" />
     </group>
 
 
-    <item android:title="Account Settings">
-        <menu>
-            <item
-                android:id="@+id/nav_update"
-                android:title="Update Profile"/>
-            <item
-                android:id="@+id/nav_logout"
-                android:title="Sign Out"/>
-        </menu>
-    </item>
+    <group>
+        <item
+            android:id="@+id/nav_share"
+            android:title="Share with friends" />
+
+        <item
+            android:id="@+id/nav_face_processing"
+            android:title="What is face processing?" />
+        <item
+            android:id="@+id/nav_about_us"
+            android:title="About Us" />
+    </group>
 </menu>

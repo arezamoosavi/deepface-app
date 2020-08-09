@@ -1,25 +1,34 @@
 package com.example.deepfaceapplication
 
-import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.media.MediaScannerConnection
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
-import java.io.IOException
+import androidx.fragment.app.Fragment
+import interfaces.RestAPI
+import kotlinx.android.synthetic.main.fragment_first.*
+import models.Analyze
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.*
+import java.util.concurrent.TimeUnit
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -28,6 +37,7 @@ class FirstFragment : Fragment() {
 
     private var button: Button? = null
     private var imageview: ImageView? = null
+    private var analyzeText: TextView? = null
     private val GALLERY = 1
     private val CAMERA = 2
 
@@ -43,6 +53,7 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         imageview = view.findViewById<ImageView>(R.id.imageView2)
+        analyzeText = view.findViewById(R.id.analyze_result_text)
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
 
             Toast.makeText(super.getContext(), "Please upload your image.", Toast.LENGTH_LONG)
@@ -87,6 +98,7 @@ class FirstFragment : Fragment() {
                     val bitmap =
                         MediaStore.Images.Media.getBitmap(context?.contentResolver, contentURI)
 //                    saveImage(bitmap)
+                    analyzePhoto(bitmap)
                     Toast.makeText(context, "Image Show!", Toast.LENGTH_SHORT).show()
                     imageview!!.setImageBitmap(bitmap)
                 } catch (e: IOException) {
@@ -97,43 +109,87 @@ class FirstFragment : Fragment() {
         } else if (requestCode == CAMERA) {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             imageview!!.setImageBitmap(thumbnail)
-//            saveImage(thumbnail)
+            analyzePhoto(thumbnail)
+
             Toast.makeText(context, "Photo Show!", Toast.LENGTH_SHORT).show()
         }
     }
 
-//    fun saveImage(myBitmap: Bitmap):String {
-//        val bytes = ByteArrayOutputStream()
-//        myBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
-//        val wallpaperDirectory = File (
-//            (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
-//        Log.d("fee", wallpaperDirectory.toString())
-//        if (!wallpaperDirectory.exists())
-//        {
-//            wallpaperDirectory.mkdirs()
-//        }
-//        try
-//        {
-//            Log.d("heel", wallpaperDirectory.toString())
-//            val f = File(wallpaperDirectory, ((Calendar.getInstance()
-//                .getTimeInMillis()).toString() + ".png"))
-//            f.createNewFile()
-//            val fo = FileOutputStream(f)
-//            fo.write(bytes.toByteArray())
-//            MediaScannerConnection.scanFile(context, arrayOf(f.getPath()), arrayOf("image/png"), null)
-//            fo.close()
-//            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
-//
-//            return f.getAbsolutePath()
-//        }
-//        catch (e1: IOException){
-//            e1.printStackTrace()
-//        }
-//        return ""
-//    }
-//
-//    companion object {
-//        private val IMAGE_DIRECTORY = "/home/m-seifikar/photo/"
-//    }
+    fun analyzePhoto(bitmap: Bitmap) {
+
+        //create a file to write bitmap data
+        val file = File(super.getContext()?.cacheDir, "test3");
+        file.createNewFile();
+
+//Convert bitmap to byte array
+        val bos = ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+        val bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+        val fos: FileOutputStream? = null;
+        try {
+            val fos = FileOutputStream(file);
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace();
+        }
+        try {
+            fos?.write(bitmapdata);
+            fos?.flush();
+            fos?.close();
+        } catch (e: IOException) {
+            e.printStackTrace();
+        }
+//        val file = File("/home/mahsa/Downloads/profile-photo.jpeg")
+        val mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+
+        val fileToUpload =
+            MultipartBody.Part.createFormData("image", file.name, mFile)
+
+
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
+        httpClient.connectTimeout(1000, TimeUnit.SECONDS)
+        httpClient.readTimeout(2000000, TimeUnit.SECONDS)
+        httpClient.addInterceptor(logging)
+//        Execute Request!
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://deepface-app.herokuapp.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient.build())
+            .build()
+
+        val uploadImage: RestAPI =
+            retrofit.create(RestAPI::class.java)
+        val fileUpload: Call<Analyze> =
+            uploadImage.analyze(fileToUpload)
+        Log.e("URL", fileUpload.request().url().toString())
+
+        fileUpload.enqueue(object : Callback<Analyze> {
+            override fun onResponse(
+                call: Call<Analyze>,
+                response: Response<Analyze>
+            ) {
+                Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
+
+                Log.e(" Javab: ", response.message())
+                analyze_result_text.setText(response.message())
+
+            }
+
+            override fun onFailure(
+                call: Call<Analyze>,
+                t: Throwable
+            ) {
+                Log.e("Mahsa Rideman", "Error " + t.message)
+                Toast.makeText(context, "Error " + t.message, Toast.LENGTH_SHORT).show()
+
+
+            }
+        })
+        Log.e("Heivoooon", "Miay asln?")
+
+    }
 
 }

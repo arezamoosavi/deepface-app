@@ -17,6 +17,14 @@
         app:layout_constraintStart_toEndOf="parent"
         />
 
+    <TextView
+        android:id="@+id/analyze_result_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="592dp" />
+
     <Button
         android:id="@+id/button_first"
         android:layout_width="match_parent"
