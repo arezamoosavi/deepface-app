@@ -30,7 +30,7 @@ def read_root():
 
 
 @app.get("/counter")
-def read_root():
+def counter():
     analyze_count = analyze.objects.count()
     compare_count = compare.objects.count()
     return {"analyze": analyze_count, "compare": compare_count}

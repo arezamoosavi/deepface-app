@@ -1,3 +1,5 @@
+import logging
+
 from PIL import Image
 from io import BytesIO
 
@@ -34,5 +36,5 @@ if __name__ == "__main__":
         exit(1)
     except Exception as e:
 
-        logger.error("Error! {}".format(e))
+        logging.error("Error! {}".format(e))
         exit(0)

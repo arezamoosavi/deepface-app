@@ -14,12 +14,12 @@ services:
     restart: unless-stopped
     command: sh /run_web.sh
 
-  jupyter:
-    <<: *basePy
-    ports:
-      - "8888:8888"
-    command: sh /run_jupyter.sh
-    restart: unless-stopped
+  # jupyter:
+  #   <<: *basePy
+  #   ports:
+  #     - "8888:8888"
+  #   command: sh /run_jupyter.sh
+  #   restart: unless-stopped
 
   mongodb:
     image: mongo:4.0.4

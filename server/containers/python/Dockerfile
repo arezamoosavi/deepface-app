@@ -33,7 +33,7 @@ RUN mkdir -p /main
 
 COPY ./main /main
 
-WORKDIR /main
+RUN python3 /main/preload.py
 
 COPY ./containers/python/run_web.sh /run_web.sh
 RUN chmod 777 /run_web.sh
@@ -43,4 +43,6 @@ COPY ./containers/python/run_jupyter.sh /run_jupyter.sh
 RUN chmod 777 /run_jupyter.sh
 
 RUN chmod -R 777 /main
-RUN chmod -R 777 ./
+# RUN chmod -R 777 ./
+
+WORKDIR /main

@@ -1,4 +1,4 @@
-import mongoengine
+from mongoengine import connect, disconnect
 import os
 
 
@@ -11,12 +11,15 @@ class Mongo:
         self.username = os.getenv("MONGODB_USERNAME")
         self.password = os.getenv("MONGODB_PASSWORD")
 
-    def connect(self) -> None:
+    def connect(self):
 
-        mongoengine.connect(
+        return connect(
             db=self.dbname,
             username=self.username,
             password=self.password,
             host=self.host,
             port=self.port,
         )
+
+    def disconnect(self) -> None:
+        disconnect()

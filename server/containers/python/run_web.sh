@@ -7,9 +7,6 @@ set -o nounset
 while python3 check_database.py; do echo 'connecting to database...'; sleep 2; done;
 
 
-python3 preload.py
-
-
 echo ". . . . . Web Boot Up Is Done! . . . . ."
 
 uvicorn run_app:app --host ${HOST} --port ${PORT} --reload --ws 'auto' \
