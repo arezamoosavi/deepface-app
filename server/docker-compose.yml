@@ -43,8 +43,8 @@ services:
     volumes:
       - production_traefik:/etc/traefik/acme
     ports:
-      - "8000:8000"
-      - "443:443"
+      - "1001:1001"
+      - "1003:1003"
 
 volumes:
   mgdata: {}
