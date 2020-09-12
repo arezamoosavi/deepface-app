@@ -33,8 +33,8 @@ RUN mkdir -p /main
 COPY ./main /main
 
 COPY ./run_web.sh /run_web.sh
-RUN chmod a+rwx /run_web.sh
-RUN chmod -R a+rwx /main
+RUN chmod 777 /run_web.sh
+RUN chmod -R 777 /main
 
 ENV PORT=80
 EXPOSE $PORT
