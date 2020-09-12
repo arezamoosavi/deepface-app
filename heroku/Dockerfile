@@ -23,8 +23,8 @@ RUN apt-get install -y netcat && apt-get autoremove -y
 RUN adduser --disabled-password --gecos '' myuser
 
 RUN apt-get install -y build-essential
-RUN pip3 install jupyterlab
-RUN pip3 install deepface==0.0.34
+RUN pip3 install dlib
+RUN pip3 install deepface
 
 COPY requirements.txt /requirements.txt
 RUN pip3 install --no-cache-dir -r /requirements.txt
