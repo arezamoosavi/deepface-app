@@ -27,7 +27,7 @@ RUN apt-get install -y build-essential
 RUN apt-get install -y cmake
 RUN pip3 install cmake
 RUN pip3 install dlib
-RUN pip3 install deepface
+RUN pip3 install deepface==0.0.33
 
 COPY requirements.txt /requirements.txt
 RUN pip3 install --no-cache-dir -r /requirements.txt
