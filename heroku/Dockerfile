@@ -20,8 +20,6 @@ RUN apt-get -y update && apt-get install -y libzbar-dev bash gcc git libc-dev
 
 RUN apt-get install -y netcat && apt-get autoremove -y
 
-RUN adduser --disabled-password --gecos '' myuser
-
 RUN apt-get install -y build-essential
 RUN pip3 install jupyterlab
 RUN pip3 install deepface
@@ -32,15 +30,13 @@ RUN pip3 install --no-cache-dir -r /requirements.txt
 RUN mkdir -p /main
 COPY ./main /main
 
-RUN chmod -R a+rwx ./
-RUN chmod -R 777 ./
-RUN chmod -R a+rwx /main
-RUN chmod -R 777 /main
-
 RUN python3 main/preload.py
 
 COPY ./run_web.sh /run_web.sh
 RUN chmod a+rwx /run_web.sh
+
+RUN chmod -R a+rwx /main
+RUN chmod -R a+rwx ./
 
 ENV PORT=80
 EXPOSE $PORT
