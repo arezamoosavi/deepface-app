@@ -33,6 +33,7 @@ RUN mkdir -p /main
 
 COPY ./main /main
 
+WORKDIR /main
 
 COPY ./run_web.sh /run_web.sh
 RUN chmod 777 /run_web.sh
@@ -41,6 +42,5 @@ RUN chmod -R 777 ./
 
 ENV PORT=80
 EXPOSE $PORT
-WORKDIR /main
 
 ENTRYPOINT ["/run_web.sh"]
