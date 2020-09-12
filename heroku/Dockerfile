@@ -32,9 +32,6 @@ RUN pip3 install --no-cache-dir -r /requirements.txt
 RUN mkdir -p /main
 COPY ./main /main
 
-RUN chmod -R a+rwx ./
-RUN python3 /main/preload.py
-
 COPY ./run_web.sh /run_web.sh
 RUN chmod a+rwx /run_web.sh
 RUN chmod -R a+rwx /main

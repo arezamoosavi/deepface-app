@@ -3,7 +3,7 @@ from PIL import Image
 from io import BytesIO
 from deepface import DeepFace
 
-with open("main/image.jpeg", "rb") as image:
+with open("image.jpeg", "rb") as image:
     f = image.read()
     b = bytearray(f)
     img = Image.open(BytesIO(b))
