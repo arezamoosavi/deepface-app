@@ -34,7 +34,7 @@ COPY ./main /main
 
 RUN chmod -R a+rwx /main
 
-RUN python3 /main/preload.py
+RUN python3 preload.py
 
 COPY ./run_web.sh /run_web.sh
 RUN chmod a+rwx /run_web.sh
