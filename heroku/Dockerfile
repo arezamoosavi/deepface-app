@@ -20,8 +20,6 @@ RUN apt-get -y update && apt-get install -y libzbar-dev bash gcc git libc-dev
 
 RUN apt-get install -y netcat && apt-get autoremove -y
 
-RUN adduser --disabled-password --gecos '' myuser
-
 RUN apt-get install -y build-essential
 RUN pip3 install deepface==0.0.33
 
