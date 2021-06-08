@@ -10,6 +10,6 @@ python-multipart
 # ------------------------------------------------------------------------------
 pymongo==3.10.1
 python-dateutil==2.8.1
-Pillow==7.1.2
+Pillow==8.2.0
 blinker==1.4
 mongoengine==0.20.0
